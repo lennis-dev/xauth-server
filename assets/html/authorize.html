@@ -1,0 +1,21 @@
+<div class="content-box hide" id="authorize-form">
+    <div>
+        <div id="error">
+
+        </div>
+        <div>
+            <img class="authorize-app-img" id="icon" src="/assets/img/lennis.dev.sq.svg">
+        </div>
+        <h1 class="center">Authorize</h1>
+        <p>Application: <strong id="name"></strong> (<strong id="domain"></strong>)</p>
+        <p>Scope(s): <strong id="scopes"></strong></p>
+        <p>Redirect URI: <strong id="redirect"></strong></p>
+
+        <p>Authorize this application to access your account?</p>
+        <div class=" btn-group">
+            <button id="deny" class="btn btn-default">Cancel</button>
+            <button class="btn btn-primary" id="authorize">Authorize</button>
+        </div>
+    </div>
+</div>
+<script type="module" src="/assets/script/authorize.mjs"></script>

@@ -1,0 +1,4 @@
+/data/keys/*
+/data/users/*
+/.vscode
+/config.php
