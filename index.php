@@ -27,4 +27,3 @@ if ($_SERVER["REQUEST_URI"] == "/register") {
     ], UI::$LOGIN_PAGE);
     exit;
 }
-header("Location: /login");
