@@ -17,6 +17,7 @@ class User
     public function __construct(string $username)
     {
         $this->username = strtolower($username);
+        if (preg_match("/[^a-z0-9._]/", $this->username)) return;
         $this->data = Utils::readJSONSecure(Config::getDataDir() . "/users/" . $this->username . "/data.json");
         $this->exists = $this->data !== false;
     }
