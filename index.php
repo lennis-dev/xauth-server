@@ -27,4 +27,4 @@ if ($_SERVER["REQUEST_URI"] == "/register") {
     ], UI::$LOGIN_PAGE);
     exit;
 }
-var_dump(Config::getWhitelistDirs());
+header("Location: /login");
