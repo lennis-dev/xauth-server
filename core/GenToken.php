@@ -18,6 +18,7 @@ class GenToken
         $this->data = $data;
         $this->data["created"] = time();
         $this->data["scopes"] = [];
+        $this->data["server"] = Config::getServerName();
     }
 
     function addScope(string $scope)

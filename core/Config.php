@@ -31,4 +31,9 @@ class Config
     {
         return Self::config()["keyRing"];
     }
+    static function getServerName(): string
+    {
+        global $config;
+        return $config["serverName"] ;
+    }
 }
