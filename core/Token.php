@@ -23,6 +23,10 @@ class Token
     function __construct($token)
     {
         $explode = explode(".", $token);
+        if (count($explode) !== 2) throw new \Exception("Invalid token");
+        if (base64_encode(base64_decode($explode[0], true)) !== $explode[0]) throw new \Exception("Invalid token");
+        if (base64_encode(base64_decode($explode[1], true)) !== $explode[1]) throw new \Exception("Invalid token");
+
         $this->data = json_decode(base64_decode($explode[0]), true);
         $this->sign = $explode[1];
         $this->user = new User($this->data["username"]);

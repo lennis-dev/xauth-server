@@ -92,14 +92,18 @@ class Request
 
     function identify()
     {
-        $this->checkAuth();
-        if (!$this->token->hasScope("identify")) {
-            $this->error("Token does not have identify scope");
-            return;
+        try {
+            $this->checkAuth();
+            if (!$this->token->hasScope("identify")) {
+                $this->error("Token does not have identify scope");
+                return;
+            }
+            $this->return(true, [
+                "username" => $this->token->user->getUsername()
+            ]);
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
         }
-        $this->return(true, [
-            "username" => $this->token->user->getUsername()
-        ]);
     }
     function return($success, $data)
     {
