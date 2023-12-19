@@ -35,10 +35,17 @@ class User
         return Utils::writeJSONSecure(Config::getDataDir() . "/users/" . $this->username . "/data.json", $this->data);
     }
 
-    public function getData(): array|false
+    public function setData(string $key, $value): void
     {
-        if (!$this->exists) return false;
-        return $this->data;
+        $data = Utils::readJSONSecure(Config::getUsersDir() . $this->username . "/data.json");
+        $data[$key] = $value;
+        Utils::writeJSONSecure(Config::getUsersDir() . $this->username . "/data.json", $data);
+    }
+
+    public function getData(string $key)
+    {
+        $data = Utils::readJSONSecure(Config::getUsersDir() . $this->username . "/data.json");
+        return $data[$key];
     }
 
     function exists(): bool

@@ -33,7 +33,11 @@ class Config
     }
     static function getServerName(): string
     {
-        global $config;
-        return $config["serverName"] ;
+        return $_SERVER["SERVER_NAME"];
+    }
+
+    static function getUsersDir(): string
+    {
+        return Self::getDataDir() . "/users/";
     }
 }

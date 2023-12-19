@@ -18,7 +18,7 @@ class Token
 
     protected string $serverKeyRing = "";
 
-    public readonly User $user;
+    protected User $user;
 
     function __construct($token)
     {
@@ -53,5 +53,10 @@ class Token
     function getData(): array
     {
         return $this->data;
+    }
+
+    function getUser(): User
+    {
+        return $this->user;
     }
 }

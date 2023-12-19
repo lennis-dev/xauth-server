@@ -3,11 +3,15 @@
 namespace LennisDev\XAuth;
 
 require __DIR__ . "/../core/Token.php";
-require __DIR__ . "/../core/GenToken.php";
+require __DIR__ . "/../core/Request/Login.php";
+require __DIR__ . "/../core/Request/Authorize.php";
+//require __DIR__ . "/../core/Request/Identify.php";
+
 
 use \LennisDev\XAuth\Token;
-use \LennisDev\XAuth\GenToken;
-
+use \LennisDev\XAuth\Request\Login;
+use \LennisDev\XAuth\Request\Authorize;
+use LennisDev\XAuth\Request\Identify;
 
 class Request
 {
@@ -37,73 +41,17 @@ class Request
 
     function login()
     {
-        if (!isset($this->requestData["auth"]["username"]))
-            $this->error("Username not set");
-        else if (!isset($this->requestData["auth"]["password"]))
-            $this->error("Password not set");
-        else {
-            $username = $this->requestData["auth"]["username"];
-            $password = $this->requestData["auth"]["password"];
-            $user = new User($username);
-            if (!$user->exists())
-                $this->error("User does not exist");
-            else if (!$user->checkPassword(
-                $password,
-                $this->requestData["auth"]["time"]
-            )) $this->error("Password is incorrect");
-            else {
-                $token = new GenToken([
-                    "username" => $username,
-                    "created" => time(),
-                    "expire" => time() + 3600
-                ]);
-                $token->addScope("authorize");
-                $token->sign();
-                $this->return(true, [
-                    "token" => $token->getToken()
-                ]);
-            }
-        }
+        Login::exec($this);
     }
 
     function authorize()
     {
-        $this->checkAuth();
-        if (!$this->token->hasScope("authorize")) {
-            $this->error("Token does not have authorize scope");
-            return;
-        }
-        if (!isset($this->requestData["scopes"]))
-            $this->error("Scopes not set");
-        else {
-            $token = new GenToken([
-                "username" => $this->token->user->getUsername(),
-                "expire" => time() + 3600
-            ]);
-            foreach ($this->requestData["scopes"] as $scope) {
-                $token->addScope($scope);
-            }
-            $token->sign();
-            $this->return(true, [
-                "token" => $token->getToken()
-            ]);
-        }
+        Authorize::exec($this);
     }
 
     function identify()
     {
-        try {
-            $this->checkAuth();
-            if (!$this->token->hasScope("identify")) {
-                $this->error("Token does not have identify scope");
-                return;
-            }
-            $this->return(true, [
-                "username" => $this->token->user->getUsername()
-            ]);
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
+        Identify::exec($this);
     }
     function return($success, $data)
     {
@@ -118,5 +66,15 @@ class Request
     function error($error)
     {
         $this->return(false, $error);
+    }
+
+    function getRequestData(): array
+    {
+        return $this->requestData;
+    }
+
+    function getToken(): \LennisDev\XAuth\Token|null
+    {
+        return $this->token;
     }
 }
