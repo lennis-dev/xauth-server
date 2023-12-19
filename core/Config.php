@@ -33,7 +33,7 @@ class Config
     }
     static function getServerName(): string
     {
-        return $_SERVER["SERVER_NAME"];
+        return $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
     static function getUsersDir(): string
