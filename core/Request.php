@@ -5,7 +5,7 @@ namespace LennisDev\XAuth;
 require __DIR__ . "/../core/Token.php";
 require __DIR__ . "/../core/Request/Login.php";
 require __DIR__ . "/../core/Request/Authorize.php";
-//require __DIR__ . "/../core/Request/Identify.php";
+require __DIR__ . "/../core/Request/Identify.php";
 
 
 use \LennisDev\XAuth\Token;
