@@ -43,6 +43,11 @@ class GenToken
         $this->data["expire"] = $expire;
     }
 
+    function setApplication(string $application)
+    {
+        $this->data["application"] = $application;
+    }
+
     function getToken(): string
     {
         return base64_encode(json_encode($this->data)) . "." . $this->sign;

@@ -32,6 +32,7 @@ class Login
                     "created" => time(),
                     "expire" => time() + 3600
                 ]);
+                $token->setApplication($_SERVER["SERVER_NAME"]);
                 $token->addScope("authorize");
                 $token->sign();
                 $obj->return(true, [

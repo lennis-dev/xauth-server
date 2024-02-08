@@ -12,7 +12,7 @@ window.addEventListener("load", async () => {
   try {
     data = JSON.parse(atob(urlHash));
     document.getElementById("name").innerText = data["name"];
-    document.getElementById("domain").innerText = new URL(data["redirect"]).origin;
+    document.getElementById("domain").innerText = new URL(data["redirect"]).hostname;
     document.getElementById("scopes").innerText = data["scopes"].join(", ");
     document.getElementById("redirect").innerText = data["redirect"];
   } catch (e) {
@@ -32,7 +32,7 @@ window.addEventListener("load", async () => {
     form.classList.add("hide");
     await sleep(1000);
     if (result["success"]) {
-      postForm(data["redirect"], { token: result["data"]["token"] });
+      postForm(data["redirect"], { token: result["data"]["token"], "application": document.getElementById("domain").innerText });
     } else {
       alert("Error: " + result["message"]);
     }

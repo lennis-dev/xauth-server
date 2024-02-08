@@ -19,12 +19,17 @@ class Authorize
         }
         if (!isset($obj->getRequestData()["scopes"]))
             $obj->error("Scopes not set");
+        if (!isset($obj->getRequestData()["application"]))
+            $obj->error("Application not set");
         else {
 
             $token = new GenToken([
                 "username" => $obj->getToken()->getUser()->getUsername(),
-                "expire" => time() + 3600
+                "expire" => time() + 3600,
+
             ]);
+
+            $token->setApplication($obj->getRequestData()["application"]);
 
             foreach ($obj->getRequestData()["scopes"] as $scope) {
                 $token->addScope($scope);
