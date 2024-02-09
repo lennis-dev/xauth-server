@@ -27,6 +27,7 @@ window.addEventListener("load", async () => {
     const postData = {
       token: sessionStorage.getItem("token"),
       scopes: data["scopes"],
+      application: document.getElementById("domain").innerText,
     };
     const result = await makeRequest("/api/v1/authorize.php", postData);
     form.classList.add("hide");
