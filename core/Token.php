@@ -59,4 +59,23 @@ class Token
     {
         return $this->user;
     }
+
+    function getApplication(): string
+    {
+        return $this->data["application"];
+    }
+
+    function getExpire(): int
+    {
+        return $this->data["expire"];
+    }
+
+    function checkExpire(): bool
+    {
+        if ($this->data["expire"] < time()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

@@ -31,11 +31,20 @@ class Request
     function checkAuth(): bool
     {
         $this->token = new Token($this->requestData["token"]);
-        if (!$this->token->checkVerify()) {
+        if (!$this->token->checkVerify() || !$this->token->checkExpire() || !$this->checkApplication($_SERVER["SERVER_NAME"])) {
             $this->error("Token is invalid");
             return false;
         } else {
             return true;
+        }
+    }
+
+    function checkApplication($serverName): bool
+    {
+        if ($this->token->getApplication() == $serverName) {
+            return true;
+        } else {
+            return false;
         }
     }
 
