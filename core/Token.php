@@ -78,4 +78,25 @@ class Token
             return true;
         }
     }
+
+    function identify(): array
+    {
+        if (!$this->hasScope("identify")) {
+            throw new \Exception("Invalid scope");
+        }
+        if (!$this->checkExpire()) {
+            throw new \Exception("Token expired");
+        }
+        if (!$this->checkVerify()) {
+            throw new \Exception("Token not verified");
+        }
+
+        return [
+            "username" => $this->user->getUsername(),
+            "application" => $this->data["application"],
+            "scopes" => $this->data["scopes"],
+            "servr" => $this->data["server"]
+
+        ];
+    }
 }
