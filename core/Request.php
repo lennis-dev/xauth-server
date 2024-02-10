@@ -22,7 +22,7 @@ class Request
     function __construct()
     {
         $this->requestData = json_decode(file_get_contents("php://input"), true);
-        $this->$this->token = new Token($this->requestData["token"]);
+        $this->token = new Token($this->requestData["token"]);
     }
     function exec($function)
     {
