@@ -95,7 +95,7 @@ class Token
             "username" => $this->user->getUsername(),
             "application" => $this->data["application"],
             "scopes" => $this->data["scopes"],
-            "servr" => $this->data["server"]
+            "server" => $this->data["server"]
 
         ];
     }
