@@ -27,6 +27,10 @@ class Request
 
     function checkAuth(): bool
     {
+        if (!$this->token) {
+            $this->error("Token is required");
+            return false;
+        }
         if (!$this->token->checkVerify() || !$this->token->checkExpire() || !$this->checkApplication($_SERVER["SERVER_NAME"])) {
             $this->error("Token is invalid");
             return false;
