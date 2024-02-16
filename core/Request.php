@@ -15,7 +15,10 @@ class Request
     function __construct()
     {
         $this->requestData = json_decode(file_get_contents("php://input"), true);
-        $this->token = new Token($this->requestData["token"]);
+        if ($this->requestData["token"])
+            $this->token = new Token($this->requestData["token"]);
+        else
+            $this->token = null;
     }
     function exec($function)
     {
@@ -24,7 +27,6 @@ class Request
 
     function checkAuth(): bool
     {
-        $this->token = new Token($this->requestData["token"]);
         if (!$this->token->checkVerify() || !$this->token->checkExpire() || !$this->checkApplication($_SERVER["SERVER_NAME"])) {
             $this->error("Token is invalid");
             return false;
