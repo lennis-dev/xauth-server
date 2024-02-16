@@ -3,15 +3,8 @@
 namespace LennisDev\XAuth;
 
 require __DIR__ . "/../core/Token.php";
-require __DIR__ . "/../core/Request/Login.php";
-require __DIR__ . "/../core/Request/Authorize.php";
-require __DIR__ . "/../core/Request/Identify.php";
-
 
 use \LennisDev\XAuth\Token;
-use \LennisDev\XAuth\Request\Login;
-use \LennisDev\XAuth\Request\Authorize;
-use LennisDev\XAuth\Request\Identify;
 
 class Request
 {
@@ -49,20 +42,6 @@ class Request
         }
     }
 
-    function login()
-    {
-        Login::exec($this);
-    }
-
-    function authorize()
-    {
-        Authorize::exec($this);
-    }
-
-    function identify()
-    {
-        Identify::exec($this);
-    }
     function return($success, $data)
     {
         if ($this->active) return;
