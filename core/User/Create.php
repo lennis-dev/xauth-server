@@ -14,13 +14,12 @@ class Create extends User
 {
     public function __construct(string $username, string $password, string $email)
     {
+        if (is_dir(Config::getUsersDir() . $username))
+            throw new \Exception("User already exists");
         $this->username = $this->validateUsername($username);
         mkdir(Config::getUsersDir() . $this->username);
-        $data = array(
-            "passwordHash" => $password,
-            "email" => $email,
-        );
-        Utils::writeJSONSecure(Config::getUsersDir() . $this->username . "/data.json", $data);
+        Utils::writeJSONSecure(Config::getUsersDir() . $this->username . "/data.json", []);
         parent::__construct($this->username);
+        $this->setPasswordHash($password);
     }
 }
