@@ -2,9 +2,9 @@
 
 namespace LennisDev\XAuth\User;
 
-require_once __DIR__ . "../User.php";
-require_once __DIR__ . "../Config.php";
-require_once __DIR__ . "../Utils.php";
+require_once __DIR__ . "/../User.php";
+require_once __DIR__ . "/../Config.php";
+require_once __DIR__ . "/../Utils.php";
 
 use LennisDev\XAuth\User;
 use LennisDev\XAuth\Config;
