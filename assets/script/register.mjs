@@ -20,7 +20,7 @@ window.addEventListener("load", async () => {
       errorEl.classList.add("alert");
       return;
     }
-    const passwordHash = await sha512((await sha512(passwordNewEl.value)) + time);
+    const passwordHash = await sha512(passwordNewEl.value);
     let data = {
       username: usernameEl.value,
       password: passwordHash,
