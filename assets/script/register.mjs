@@ -4,40 +4,34 @@ import { makeRequest, sha512, sleep } from "./utils.mjs";
 navigation();
 
 window.addEventListener("load", async () => {
-  const form = document.getElementById("register-form");
-  const username = document.getElementById("username");
-  const passwordNew = document.getElementById("new-password");
-  const passwordConfirm = document.getElementById("confirm-password");
-  const error = document.getElementById("error");
+  const formEl = document.getElementById("register-form");
+  const usernameEl = document.getElementById("username");
+  const passwordNewEl = document.getElementById("new-password");
+  const passwordConfirmEl = document.getElementById("confirm-password");
+  const emailEl = document.getElementById("email");
+  const errorEl = document.getElementById("error");
 
-  form.classList.remove("hide");
+  formEl.classList.remove("hide");
 
-  form.addEventListener("submit", async (e) => {
+  formEl.addEventListener("submit", async (e) => {
     e.preventDefault();
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    let time = Math.floor(Date.now() / 1000);
-    let passwordHash = await sha512((await sha512(password)) + time);
+    if (passwordNewEl.value !== passwordConfirmEl.value) {
+      errorEl.innerText = "Passwords do not match";
+      errorEl.classList.add("alert");
+      return;
+    }
+    const passwordHash = await sha512((await sha512(passwordNewEl.value)) + time);
     let data = {
-      auth: {
-        time: time,
-        username: username,
-        password: passwordHash,
-      },
+      username: usernameEl.value,
+      password: passwordHash,
+      email: emailEl.value
     };
-    const response = await makeRequest("/api/v1/login.php", data);
+    const response = await makeRequest("/api/v1/register.php", data);
     if (response["success"] === true) {
-      form.classList.add("hide");
-      await sleep(1000);
-      sessionStorage.setItem("token", response["data"]["token"]);
-      if (window.location.hash.startsWith("#redirect=")) {
-        window.location = window.location.hash.substring(10);
-      } else {
-        window.location = "/dashboard";
-      }
+      alert("Success:\n".response["data"]["message"]);
     } else {
-      error.innerText = response["data"];
-      error.classList.add("alert");
+      errorEl.innerText = response["data"]["message"];
+      errorEl.classList.add("alert");
     }
   });
 });

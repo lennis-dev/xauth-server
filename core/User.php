@@ -16,8 +16,7 @@ class User
 
     public function __construct(string $username)
     {
-        $this->username = strtolower($username);
-        if (preg_match("/[^a-z0-9._]/", $this->username)) return;
+        $this->username = $this->validateUsername($username);
         $this->data = Utils::readJSONSecure(Config::getDataDir() . "/users/" . $this->username . "/data.json");
         $this->exists = $this->data !== false;
     }
@@ -26,6 +25,15 @@ class User
     {
         if (!$this->exists) return null;
         return $this->username;
+    }
+
+    public function validateUsername(string $username): string
+    {
+        $username = strtolower($username);
+        if (!preg_match("/^[a-z0-9_]{3,16}$/", $username)) {
+            throw new \Exception("Invalid username");
+        }
+        return $username;
     }
 
     public function writeUserData(): bool
@@ -61,5 +69,11 @@ class User
         } else {
             return false;
         }
+    }
+
+    function setPasswordHash(string $passwordHash): void
+    {
+        $this->data["passwordHash"] = $passwordHash;
+        $this->writeUserData();
     }
 }

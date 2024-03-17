@@ -48,7 +48,7 @@ class Request
         }
     }
 
-    function return($success, $data)
+    function return(bool $success, $data)
     {
         if ($this->active) return;
         $returnData = [
