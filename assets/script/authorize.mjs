@@ -35,7 +35,7 @@ window.addEventListener("load", async () => {
     if (result["success"]) {
       postForm(data["redirect"], { token: result["data"]["token"], "application": document.getElementById("domain").innerText });
     } else {
-      alert("Error: " + result["message"]);
+      alert("Error: " + result["data"]["message"]);
     }
   });
 
