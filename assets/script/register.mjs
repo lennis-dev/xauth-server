@@ -28,9 +28,9 @@ window.addEventListener("load", async () => {
     };
     const response = await makeRequest("/api/v1/register.php", data);
     if (response["success"] === true) {
-      alert("Success:\n".response["data"]["message"]);
+      alert("Success:\n".response["data"]);
     } else {
-      errorEl.innerText = response["data"]["message"];
+      errorEl.innerText = response["data"];
       errorEl.classList.add("alert");
     }
   });
