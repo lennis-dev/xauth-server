@@ -15,7 +15,7 @@ class Register
             $password = $obj->getRequestData()["password"];
             $email = $obj->getRequestData()["email"];
             $user = new CreateUser($username, $password, $email);
-            $obj->return(true, "created user" . $user->getUsername());
+            $obj->return(true, "created user " . $user->getUsername());
         } catch (\Exception $e) {
             $obj->error($e->getMessage());
         }
