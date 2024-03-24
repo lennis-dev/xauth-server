@@ -30,7 +30,7 @@ class User
     public function validateUsername(string $username): string
     {
         $username = strtolower($username);
-        if (!preg_match("/^[a-z0-9_]{3,16}$/", $username)) {
+        if (!preg_match("/^[a-z0-9-.]{3,32}$/", $username)) {
             throw new \Exception("Invalid username");
         }
         return $username;
