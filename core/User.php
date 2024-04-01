@@ -63,8 +63,8 @@ class User
 
     function checkPassword(string $password, $time): bool
     {
-        if (!$this->exists) return false;
-        if ($time > time() - 60 && $time <= time()) {
+        if (!$this->exists()) return false;
+        if ($time > time() - 10 && $time <= time() + 10) {
             return hash("sha512", $this->data["passwordHash"] . $time) === $password;
         } else {
             return false;
