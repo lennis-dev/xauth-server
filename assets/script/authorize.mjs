@@ -35,6 +35,11 @@ window.addEventListener("load", async () => {
     if (result["success"]) {
       postForm(data["redirect"], { token: result["data"]["token"], "application": document.getElementById("domain").innerText });
     } else {
+      if (result["data"] === "Token is invalid") {
+        sessionStorage.setItem("token", null);
+        window.location.pathname = "/login";
+        return;
+      }
       alert("Error: " + result["data"]);
     }
   });
