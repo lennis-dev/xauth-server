@@ -14,9 +14,9 @@ class Create extends User
 {
     public function __construct(string $username, string $password, string $email)
     {
-        if (is_dir(Config::getUsersDir() . $username))
-            throw new \Exception("User already exists");
         $this->username = $this->validateUsername($username);
+        if (is_dir(Config::getUsersDir() . $this->username))
+            throw new \Exception("User already exists");
         mkdir(Config::getUsersDir() . $this->username);
         touch(Config::getUsersDir() . $this->username . "/data.json");
         Utils::writeJSONSecure(Config::getUsersDir() . $this->username . "/data.json", []);
