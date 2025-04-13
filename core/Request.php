@@ -15,7 +15,7 @@ class Request
     function __construct()
     {
         $this->requestData = json_decode(file_get_contents("php://input"), true);
-        if ($this->requestData["token"])
+        if (isset($this->requestData["token"]))
             $this->token = new Token($this->requestData["token"]);
         else
             $this->token = null;
