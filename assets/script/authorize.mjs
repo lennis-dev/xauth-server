@@ -11,8 +11,11 @@ window.addEventListener("load", async () => {
   const deny = document.getElementById("deny");
   try {
     data = JSON.parse(atob(urlHash));
+    document.getElementById("icon").src = data["icon"];
     document.getElementById("name").innerText = data["name"];
-    document.getElementById("domain").innerText = new URL(data["redirect"]).hostname;
+    document.getElementById("domain").innerText = new URL(
+      data["redirect"],
+    ).hostname;
     document.getElementById("scopes").innerText = data["scopes"].join(", ");
     document.getElementById("redirect").innerText = data["redirect"];
   } catch (e) {
@@ -33,11 +36,18 @@ window.addEventListener("load", async () => {
     form.classList.add("hide");
     await sleep(1000);
     if (result["success"]) {
-      postForm(data["redirect"], { token: result["data"]["token"], "application": document.getElementById("domain").innerText });
+      postForm(data["redirect"], {
+        token: result["data"]["token"],
+        application: document.getElementById("domain").innerText,
+      });
     } else {
       if (result["data"] === "Token is invalid") {
         sessionStorage.removeItem("token");
-        window.location.href = "/login#redirect=" + window.location.pathname + window.location.search + window.location.hash;
+        window.location.href =
+          "/login#redirect=" +
+          window.location.pathname +
+          window.location.search +
+          window.location.hash;
         return;
       }
       alert("Error: " + result["data"]);
